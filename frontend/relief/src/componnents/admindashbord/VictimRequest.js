@@ -1,89 +1,87 @@
-import React, { useState} from "react";
+import React, { useState, useEffect } from "react";
+import axios from "axios";
 
-const VictimRequest = () => {
-  // Mock data for victim requests
-  const [victimRequest, setVictimRequest] = useState([]);
+const VictimRequests = () => {
+  const [victimRequests, setVictimRequests] = useState([]);
 
-  // Mock data for NGOs
-  const [ngos, setNgos] = useState([]);
+  // Fetch all victim requests on component mount
+  useEffect(() => {
+    fetchVictimRequests();
+  }, []);
 
-  const [assignedNgo, setAssignedNgo] = useState(null);
+  const fetchVictimRequests = async () => {
+    try {
+      const response = await axios.get("http://localhost:5001/api/admin/victim-requests");
+      setVictimRequests(response.data);
+    } catch (error) {
+      console.error("Error fetching victim requests:", error);
+    }
+  };
 
-  // Filter NGOs based on proximity to victim's location (mock logic)
-  const filteredNgos = ngos.filter((ngo) => ngo.location === victimRequest.location);
+  // Delete a victim request
+  const handleDeleteRequest = async (id) => {
+    try {
+      await axios.delete(`http://localhost:5001/api/admin/victim-requests/${id}`);
+      setVictimRequests(victimRequests.filter((req) => req._id !== id));
+    } catch (error) {
+      console.error("Error deleting victim request:", error);
+    }
+  };
 
-  // Handle assignment of NGO
-  const handleAssignNgo = (ngoId) => {
-    const selectedNgo = ngos.find((ngo) => ngo.id === ngoId);
-    setAssignedNgo(selectedNgo);
+  // Helper function to display the location
+  const renderLocation = (location) => {
+    if (typeof location === "object" && location.coordinates) {
+      return location.coordinates.join(", ");
+    }
+    return location;
   };
 
   return (
-    <div className="p-6">
-      <h1 className="text-2xl font-bold mb-6">Victim Request</h1>
-      <div className="grid grid-cols-1 lg:grid-cols-2 gap-6">
-        {/* Victim Request Section */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Victim Details</h2>
-          <p className="mb-2">
-            <strong>Location:</strong> {victimRequest.location}
-          </p>
-          <h3 className="font-semibold mb-2">Required Resources:</h3>
-          <ul className="list-disc ml-5">
-            {Object.entries(victimRequest.requiredResources).map(([key, value]) => (
-              <li key={key}>
-                {key.charAt(0).toUpperCase() + key.slice(1)}: {value}
-              </li>
-            ))}
-          </ul>
-        </div>
-
-        {/* NGOs Section */}
-        <div className="bg-white p-6 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-4">Nearest NGOs</h2>
-          {filteredNgos.length > 0 ? (
-            <ul>
-              {filteredNgos.map((ngo) => (
-                <li key={ngo.id} className="mb-4 border-b pb-4">
-                  <h3 className="font-semibold">{ngo.name}</h3>
-                  <p>Location: {ngo.location}</p>
-                  <h4 className="font-semibold mt-2">Available Resources:</h4>
-                  <ul className="list-disc ml-5">
-                    {Object.entries(ngo.resourcesAvailable).map(([key, value]) => (
-                      <li key={key}>
-                        {key.charAt(0).toUpperCase() + key.slice(1)}: {value}
-                      </li>
-                    ))}
-                  </ul>
-                  <button
-                    onClick={() => handleAssignNgo(ngo.id)}
-                    className="mt-2 bg-blue-500 text-white px-4 py-2 rounded hover:bg-blue-600"
-                  >
-                    Assign to Victim
-                  </button>
-                </li>
+    <div className="p-4">
+      <h1 className="text-xl font-bold mb-4">Victim Requests</h1>
+      <div className="bg-white p-4 rounded shadow overflow-x-auto">
+        {victimRequests.length > 0 ? (
+          <table className="min-w-full text-xs">
+            <thead>
+              <tr className="bg-gray-100">
+                <th className="px-2 py-1">Request Type</th>
+                <th className="px-2 py-1">Description</th>
+                <th className="px-2 py-1">Location</th>
+                <th className="px-2 py-1">Status</th>
+                <th className="px-2 py-1">Victim Email</th>
+                <th className="px-2 py-1">Victim Phone</th>
+                <th className="px-2 py-1">Affected People</th>
+                <th className="px-2 py-1">Actions</th>
+              </tr>
+            </thead>
+            <tbody>
+              {victimRequests.map((request) => (
+                <tr key={request._id} className="border-b">
+                  <td className="px-2 py-1 border">{request.requestType}</td>
+                  <td className="px-2 py-1 border">{request.description}</td>
+                  <td className="px-2 py-1 border">{renderLocation(request.location)}</td>
+                  <td className="px-2 py-1 border">{request.status}</td>
+                  <td className="px-2 py-1 border">{request.victimEmail}</td>
+                  <td className="px-2 py-1 border">{request.victimPhone}</td>
+                  <td className="px-2 py-1 border">{request.affectedPeople}</td>
+                  <td className="px-2 py-1 border">
+                    <button
+                      onClick={() => handleDeleteRequest(request._id)}
+                      className="bg-red-500 text-white px-2 py-1 rounded text-xs hover:bg-red-600"
+                    >
+                      Delete
+                    </button>
+                  </td>
+                </tr>
               ))}
-            </ul>
-          ) : (
-            <p className="text-gray-500">No nearby NGOs found.</p>
-          )}
-        </div>
+            </tbody>
+          </table>
+        ) : (
+          <p className="text-center text-gray-500">No victim requests found.</p>
+        )}
       </div>
-
-      {/* Assigned NGO Section */}
-      {assignedNgo && (
-        <div className="mt-6 bg-green-100 p-4 rounded-lg shadow">
-          <h2 className="text-xl font-semibold mb-2">Assigned NGO</h2>
-          <p>
-            <strong>Name:</strong> {assignedNgo.name}
-          </p>
-          <p>
-            <strong>Location:</strong> {assignedNgo.location}
-          </p>
-        </div>
-      )}
     </div>
   );
 };
 
-export default VictimRequest;
+export default VictimRequests;

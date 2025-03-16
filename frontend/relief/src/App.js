@@ -2,13 +2,14 @@ import React from "react";
 import { BrowserRouter as Router, Routes, Route } from "react-router-dom";
 
 // Admin Dashboard Components
-import AdminSidebar from "./componnents/admindashbord/Sidebar";
+// import AdminSidebar from "./componnents/admindashbord/Sidebar";
 import AdminDashboard from "./componnents/admindashbord/Dashboard";
 import VictimRequests from "./componnents/admindashbord/VictimRequest";
 import Resources from "./componnents/admindashbord/Resources";
 import NgoVerification from "./componnents/admindashbord/NgoVerification";
-import ReliefOperationsOverview from "./componnents/admindashbord/ReliefOperationsOverview";
-import UserVerification from "./componnents/admindashbord/UserVerification";
+import AdminSidebar from "./componnents/admindashbord/AdminSidebar";
+import AdminLogin from "./componnents/admindashbord/AdminLogin";
+import AdminSignup from "./componnents/admindashbord/AdminSign";
 
 // NGO Dashboard Components
 import NgoSidebar from "./componnents/ngodashbord/Sidebar";
@@ -29,6 +30,9 @@ import ResourceManagement from "./componnents/ngodashbord/ResourceManagement";
 import LandingPage from "./componnents/LandingPage";
 import History from "./componnents/ngodashbord/History";
 
+
+
+
 const App = () => {
   return (
     <Router>
@@ -38,15 +42,15 @@ const App = () => {
           path="/admin/*"
           element={
             <div className="flex h-screen">
-              <AdminSidebar />
+             <AdminSidebar/>
               <div className="flex-1 p-6 bg-gray-100 overflow-y-auto">
                 <Routes>
                   <Route path="" element={<AdminDashboard />} />
                   <Route path="victim-requests" element={<VictimRequests />} />
                   <Route path="resources" element={<Resources />} />
                   <Route path="ngo-verification" element={<NgoVerification />} />
-                  <Route path="reliefoperationsoverview" element={<ReliefOperationsOverview />} />
-                  <Route path="user-verification" element={<UserVerification />} />
+        
+    
                 </Routes>
               </div>
             </div>
@@ -96,6 +100,8 @@ const App = () => {
         />
         <Route path="/ngo-login" element={<NGOLoginPage/>} />
         <Route path="/ngo-sign-up" element={<NGOSignupPage/>} />
+        <Route path="/admin-login" element={<AdminLogin/>} />
+        <Route path="/admin-sign-up" element={<AdminSignup/>} />
         <Route path="/victim-signup" element={<Victimsignup />} />
         <Route path="/victim-login" element={< Victimlogin/>} />
         <Route path="/" element={<LandingPage/>} />

@@ -27,7 +27,7 @@ const AlertSystem = () => {
         headers: {
           "Content-Type": "application/json",
         },
-        body: JSON.stringify({ id: id, safetyStatus: "In Progress" }),
+        body: JSON.stringify({ id: id, safetyStatus: "Completed" }),
       });
 
       // Refresh the alerts after completion

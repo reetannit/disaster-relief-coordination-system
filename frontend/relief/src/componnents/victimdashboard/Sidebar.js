@@ -52,7 +52,7 @@ const VictimSidebar = () => {
     localStorage.clear();
 
     // Navigate to the login page
-    navigate("/victim-login");
+    navigate("/");
   };
 
   return (

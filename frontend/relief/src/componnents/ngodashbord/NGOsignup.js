@@ -1,5 +1,3 @@
-// import React, { useState, useEffect } from "react";
-
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router";
 
@@ -11,8 +9,9 @@ const NGOSignupPage = () => {
   const [confirmPassword, setConfirmPassword] = useState("");
   const [coordinates, setCoordinates] = useState([]);
   const [loading, setLoading] = useState(false);
+  const [errors, setErrors] = useState({});
 
-  const navigate=useNavigate();
+  const navigate = useNavigate();
 
   // Fetch user coordinates
   useEffect(() => {
@@ -36,16 +35,35 @@ const NGOSignupPage = () => {
     fetchCoordinates();
   }, []);
 
+  // Validate inputs
+  const validateInputs = () => {
+    const newErrors = {};
+
+    // Email validation
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    if (!emailRegex.test(email)) {
+      newErrors.email = "Invalid email format";
+    }
+
+    // Phone number validation (10-digit numeric)
+    const phoneRegex = /^[0-9]{10}$/;
+    if (!phoneRegex.test(phone)) {
+      newErrors.phone = "Phone number must be exactly 10 digits";
+    }
+
+    // Password match validation
+    if (password !== confirmPassword) {
+      newErrors.password = "Passwords do not match";
+    }
+
+    setErrors(newErrors);
+    return Object.keys(newErrors).length === 0; // Return true if no errors
+  };
+
   const handleNGOSignup = async (e) => {
     e.preventDefault();
 
-    if (!name || !email || !phone || !password || !confirmPassword || coordinates.length === 0) {
-      alert("All fields are required.");
-      return;
-    }
-
-    if (password !== confirmPassword) {
-      alert("Passwords don't match");
+    if (!validateInputs()) {
       return;
     }
 
@@ -68,8 +86,7 @@ const NGOSignupPage = () => {
       const data = await response.json();
 
       if (response.ok) {
-       
-       navigate("/ngo-login")
+        navigate("/ngo-login");
       } else {
         alert(data.message || "Signup failed");
       }
@@ -100,6 +117,8 @@ const NGOSignupPage = () => {
               required
             />
           </div>
+
+          {/* Email Field with Validation */}
           <div className="mb-4">
             <label htmlFor="email" className="block text-sm font-medium text-gray-700">
               Email
@@ -109,11 +128,14 @@ const NGOSignupPage = () => {
               id="email"
               value={email}
               onChange={(e) => setEmail(e.target.value)}
-              className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+              className={`w-full p-3 mt-1 border ${errors.email ? "border-red-500" : "border-gray-300"} rounded-lg`}
               placeholder="Enter your email"
               required
             />
+            {errors.email && <p className="text-red-500 text-xs mt-1">{errors.email}</p>}
           </div>
+
+          {/* Phone Number Field with Validation */}
           <div className="mb-4">
             <label htmlFor="phone" className="block text-sm font-medium text-gray-700">
               Phone Number
@@ -123,16 +145,21 @@ const NGOSignupPage = () => {
               id="phone"
               value={phone}
               onChange={(e) => setPhone(e.target.value)}
-              className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+              className={`w-full p-3 mt-1 border ${errors.phone ? "border-red-500" : "border-gray-300"} rounded-lg`}
               placeholder="Enter your phone number"
               required
             />
+            {errors.phone && <p className="text-red-500 text-xs mt-1">{errors.phone}</p>}
           </div>
+
+          {/* Location Display */}
           <div className="mb-4">
             <p className="text-xs text-gray-500 mt-1">
               Your coordinates: {coordinates.length > 0 ? `${coordinates[1]}, ${coordinates[0]}` : "Fetching..."}
             </p>
           </div>
+
+          {/* Password Field */}
           <div className="mb-4">
             <label htmlFor="password" className="block text-sm font-medium text-gray-700">
               Password
@@ -147,6 +174,8 @@ const NGOSignupPage = () => {
               required
             />
           </div>
+
+          {/* Confirm Password Field */}
           <div className="mb-6">
             <label htmlFor="confirmPassword" className="block text-sm font-medium text-gray-700">
               Confirm Password
@@ -156,11 +185,14 @@ const NGOSignupPage = () => {
               id="confirmPassword"
               value={confirmPassword}
               onChange={(e) => setConfirmPassword(e.target.value)}
-              className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
+              className={`w-full p-3 mt-1 border ${errors.password ? "border-red-500" : "border-gray-300"} rounded-lg`}
               placeholder="Confirm your password"
               required
             />
+            {errors.password && <p className="text-red-500 text-xs mt-1">{errors.password}</p>}
           </div>
+
+          {/* Submit Button */}
           <button
             type="submit"
             className={`w-full py-3 text-white rounded-lg ${loading ? "bg-gray-400" : "bg-blue-500 hover:bg-blue-600"}`}
@@ -169,6 +201,7 @@ const NGOSignupPage = () => {
             {loading ? "Signing Up..." : "Sign Up"}
           </button>
         </form>
+
         <p className="mt-4 text-sm text-center">
           Already have an account? <a href="ngo-login" className="text-blue-500">Login</a>
         </p>

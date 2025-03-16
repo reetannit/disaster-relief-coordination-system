@@ -2,9 +2,10 @@ import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 const NGOLoginPage = () => {
-  const navigate=useNavigate();
+  const navigate = useNavigate();
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
+  const [isNotVerified, setIsNotVerified] = useState(false);
 
   const handleNGOLogin = async (e) => {
     e.preventDefault();
@@ -19,12 +20,16 @@ const NGOLoginPage = () => {
 
       const data = await response.json();
       if (response.ok) {
-        localStorage.setItem("token",data.token)
-        localStorage.setItem("email",data.email)
-        localStorage.setItem("name",data.name)
-        alert("Login successful!");
-        navigate("/ngo/resource-management")
+        if (data.verified !== "true") {
+          setIsNotVerified(true);
+          return;
+        }
         
+        localStorage.setItem("token", data.token);
+        localStorage.setItem("email", data.email);
+        localStorage.setItem("name", data.name);
+        alert("Login successful!");
+        navigate("/ngo/resource-management");
       } else {
         alert(data.message || "Login failed");
       }
@@ -50,6 +55,7 @@ const NGOLoginPage = () => {
               onChange={(e) => setEmail(e.target.value)}
               className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
               placeholder="Enter your email"
+              required
             />
           </div>
           <div className="mb-6">
@@ -63,6 +69,7 @@ const NGOLoginPage = () => {
               onChange={(e) => setPassword(e.target.value)}
               className="w-full p-3 mt-1 border border-gray-300 rounded-lg"
               placeholder="Enter your password"
+              required
             />
           </div>
           <button
@@ -76,6 +83,22 @@ const NGOLoginPage = () => {
           Don't have an account? <a href="ngo-sign-up" className="text-green-500">Sign up</a>
         </p>
       </div>
+
+      {/* Modal for unverified NGO */}
+      {isNotVerified && (
+        <div className="fixed inset-0 flex items-center justify-center bg-black bg-opacity-50">
+          <div className="bg-white p-6 rounded-lg shadow-lg w-96 text-center">
+            <h3 className="text-xl font-bold mb-4">Account Not Verified</h3>
+            <p>Your NGO account has not been verified yet. Please wait for admin approval.</p>
+            <button
+              onClick={() => setIsNotVerified(false)}
+              className="mt-4 px-4 py-2 bg-red-500 text-white rounded-lg hover:bg-red-600"
+            >
+              Close
+            </button>
+          </div>
+        </div>
+      )}
     </div>
   );
 };

@@ -98,7 +98,7 @@ const LandingPage = () => {
                 Oversee the system, monitor requests, and ensure that relief efforts are well-coordinated.
               </p>
               <Link 
-                to="/admin-dashboard" 
+                to="/admin-login" 
                 className="block text-center bg-purple-500 hover:bg-purple-600 text-white font-semibold py-3 px-6 rounded-full"
               >
                 Admin Dashboard
