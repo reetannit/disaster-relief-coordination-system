@@ -1,70 +1,146 @@
-# Getting Started with Create React App
+Disaster Relief Coordination System
+The Disaster Relief Coordination System is designed to streamline emergency response efforts by enabling real-time communication between victims, first responders, and relief teams. This system facilitates prompt incident reporting, live status updates, and resource coordination during disaster events, ensuring that help reaches those in need as quickly as possible.
 
-This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
+Table of Contents
+Features
 
-## Available Scripts
+Technologies Used
 
-In the project directory, you can run:
+Installation
 
-### `npm start`
+Usage
 
-Runs the app in the development mode.\
-Open [http://localhost:3000](http://localhost:3000) to view it in your browser.
+API Endpoints
 
-The page will reload when you make changes.\
-You may also see any lint errors in the console.
+Contributing
 
-### `npm test`
+License
 
-Launches the test runner in the interactive watch mode.\
-See the section about [running tests](https://facebook.github.io/create-react-app/docs/running-tests) for more information.
+Contact
 
-### `npm run build`
+Features
+Real-Time Alerts: Receive and manage emergency alerts as they are reported.
 
-Builds the app for production to the `build` folder.\
-It correctly bundles React in production mode and optimizes the build for the best performance.
+Interactive Map: View incident locations on Google Maps for quick geographical context.
 
-The build is minified and the filenames include the hashes.\
-Your app is ready to be deployed!
+Status Updates: Track alerts with statuses such as "In Progress" and "Completed."
 
-See the section about [deployment](https://facebook.github.io/create-react-app/docs/deployment) for more information.
+Resource Coordination: Assign teams and manage resources effectively during disasters.
 
-### `npm run eject`
+User-Friendly Dashboard: A responsive interface for efficient management of incidents and communications.
 
-**Note: this is a one-way operation. Once you `eject`, you can't go back!**
+Technologies Used
+Frontend:
 
-If you aren't satisfied with the build tool and configuration choices, you can `eject` at any time. This command will remove the single build dependency from your project.
+React
 
-Instead, it will copy all the configuration files and the transitive dependencies (webpack, Babel, ESLint, etc) right into your project so you have full control over them. All of the commands except `eject` will still work, but they will point to the copied scripts so you can tweak them. At this point you're on your own.
+JavaScript
 
-You don't have to ever use `eject`. The curated feature set is suitable for small and middle deployments, and you shouldn't feel obligated to use this feature. However we understand that this tool wouldn't be useful if you couldn't customize it when you are ready for it.
+HTML & CSS
 
-## Learn More
+Tailwind CSS (for styling)
 
-You can learn more in the [Create React App documentation](https://facebook.github.io/create-react-app/docs/getting-started).
+Backend:
 
-To learn React, check out the [React documentation](https://reactjs.org/).
+Node.js
 
-### Code Splitting
+Express.js
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/code-splitting](https://facebook.github.io/create-react-app/docs/code-splitting)
+MongoDB (or your preferred database)
 
-### Analyzing the Bundle Size
+APIs & Tools:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size](https://facebook.github.io/create-react-app/docs/analyzing-the-bundle-size)
+Google Maps API for location services
 
-### Making a Progressive Web App
+Fetch API for asynchronous data fetching
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app](https://facebook.github.io/create-react-app/docs/making-a-progressive-web-app)
+Installation
+Prerequisites
+Node.js and npm installed.
 
-### Advanced Configuration
+MongoDB or another database running (if used).
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/advanced-configuration](https://facebook.github.io/create-react-app/docs/advanced-configuration)
+API key for Google Maps (if map functionality is required).
 
-### Deployment
+Steps
+Clone the Repository:
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/deployment](https://facebook.github.io/create-react-app/docs/deployment)
+bash
+Copy
+Edit
+git clone https://github.com/reetannit/disaster-relief-coordination-system
 
-### `npm run build` fails to minify
 
-This section has moved here: [https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify](https://facebook.github.io/create-react-app/docs/troubleshooting#npm-run-build-fails-to-minify)
+Create a .env file in your server directory and add your configuration details. For example:
+
+env
+Copy
+Edit
+PORT=5001
+MONGO_URI=your_mongo_connection_string
+GOOGLE_MAPS_API_KEY=your_google_maps_api_key
+Run the Application:
+
+Backend:
+From the server directory, start the backend server:
+
+bash
+Copy
+Edit
+node server.js
+Frontend:
+From the client directory, start the React development server:
+
+bash
+Copy
+Edit
+npm start
+The frontend will be available at http://localhost:3000 and the backend at http://localhost:5001.
+
+Usage
+Emergency Alerts:
+View and manage active alerts in real time. The system displays alerts with details like location, safety status, message, and phone number.
+
+Accepting Alerts:
+Alerts can be marked as "In Progress" or "Completed" to track their resolution. When an alert is accepted, its status updates and the alert list refreshes automatically.
+
+Viewing Incident Locations:
+Click the "View Map" button on any alert to open the incident location on Google Maps in a new browser tab.
+
+API Endpoints
+GET /api/emergency/emergencies:
+Retrieves a list of current emergency alerts.
+
+PATCH /api/emergency/updateStatus:
+Updates the safety status of an alert. The request body should include:
+
+json
+Copy
+Edit
+{
+  "id": "alert_id",
+  "safetyStatus": "In Progress" // or "Completed"
+}
+Additional endpoints can be added as needed for resource assignment, incident reporting, etc.
+
+Contributing
+Contributions are welcome! To contribute to the Disaster Relief Coordination System:
+
+Fork the repository.
+
+Create a new branch for your feature or bug fix.
+
+Commit your changes with clear, descriptive messages.
+
+Submit a pull request with details about your changes.
+
+Please adhere to the project's coding standards and include tests where applicable.
+
+
+Output 
+
+![Landing](/assets/Landing.png)
+![Victim](/assets/Victim.png)
+![NGO](/assets/NGO.png)
+![Admin](/assets/Admin.png)
+
