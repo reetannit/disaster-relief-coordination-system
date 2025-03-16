@@ -26,6 +26,7 @@ exports.signup = async (req, res) => {
       email,
       password: hashedPassword,
       phone,
+      verified:"false",
       location: {
         type: 'Point',
         coordinates: coordinates,  // Expected as [longitude, latitude]
@@ -69,11 +70,19 @@ exports.login = async (req, res) => {
     }
 
     // Generate JWT token
-    const token = jwt.sign({ id: ngo._id, email: ngo.email }, "yourSecretKey", {
-      expiresIn: "24h",
-    });
+    const token = jwt.sign(
+      { id: ngo._id, email: ngo.email, verified: ngo.verified },
+      "yourSecretKey",
+      { expiresIn: "24h" }
+    );
 
-    res.status(200).json({ message: "Login successful", token, email, name: ngo.name });
+    res.status(200).json({
+      message: "Login successful",
+      token,
+      email: ngo.email,
+      name: ngo.name,
+      verified: ngo.verified, // Include verified status
+    });
   } catch (error) {
     console.error(error);
     res.status(500).json({ message: "Internal Server Error", error: error.message });
