@@ -11,6 +11,10 @@ exports.signup = async (req, res) => {
   try {
     const { name, email, password, phone, coordinates } = req.body;
 
+    if (!name || !email || !password || !phone || !coordinates) {
+      return res.status(400).json({ message: "All fields are required" });
+    }
+
     // Check if NGO already exists
     const existingNGO = await NGO.findOne({ email });
     if (existingNGO) {
