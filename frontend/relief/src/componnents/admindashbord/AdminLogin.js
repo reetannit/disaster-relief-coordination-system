@@ -32,7 +32,7 @@ const AdminLogin = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5001/api/admin/login", formData);
+      const response = await axios.post("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/login", formData);
       localStorage.setItem("adminToken", response.data.token);
       navigate("/admin/");
     } catch (error) {

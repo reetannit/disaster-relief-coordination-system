@@ -70,7 +70,7 @@ const NGOSignupPage = () => {
     setLoading(true);
 
     try {
-      const response = await fetch("http://localhost:5001/api/ngo/signup", {
+      const response = await fetch("https://disaster-relief-coordination-system-backend.vercel.app/api/ngo/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

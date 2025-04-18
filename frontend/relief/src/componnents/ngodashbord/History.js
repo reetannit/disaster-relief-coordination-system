@@ -13,7 +13,7 @@ const History = () => {
 
         // Fetch requests assigned to NGO
         const response = await axios.post(
-          `http://localhost:5001/api/ngo/ngohistory`, // Update the correct API endpoint here
+          `https://disaster-relief-coordination-system-backend.vercel.app/api/ngo/ngohistory`, // Update the correct API endpoint here
           { ngoEmail: localStorage.getItem("email") }
         );
 

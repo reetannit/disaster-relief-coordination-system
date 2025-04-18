@@ -20,16 +20,16 @@ const Resources = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const ngosRes = await axios.get("http://localhost:5001/api/admin/ngos");
+        const ngosRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/ngos");
         setNGOs(ngosRes.data);
 
-        const victimsRes = await axios.get("http://localhost:5001/api/admin/victims");
+        const victimsRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victims");
         setVictims(victimsRes.data);
 
-        const victimReqRes = await axios.get("http://localhost:5001/api/admin/victim-requests");
+        const victimReqRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victim-requests");
         setVictimRequests(victimReqRes.data);
 
-        const emergencyRes = await axios.get("http://localhost:5001/api/admin/emergencies");
+        const emergencyRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/emergencies");
         setEmergencyAlerts(emergencyRes.data);
       } catch (error) {
         console.error("Error fetching data: ", error);
@@ -42,7 +42,7 @@ const Resources = () => {
   const updateNGO = async (updatedNGO) => {
     try {
       const response = await axios.put(
-        `http://localhost:5001/api/admin/ngos/${updatedNGO._id}`,
+        `https://disaster-relief-coordination-system-backend.vercel.app/api/admin/ngos/${updatedNGO._id}`,
         updatedNGO
       );
       setNGOs(ngos.map((ngo) => (ngo._id === response.data._id ? response.data : ngo)));
@@ -54,7 +54,7 @@ const Resources = () => {
 
   const deleteNGO = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/admin/ngos/${id}`);
+      await axios.delete(`https://disaster-relief-coordination-system-backend.vercel.app/api/admin/ngos/${id}`);
       setNGOs(ngos.filter((ngo) => ngo._id !== id));
     } catch (error) {
       console.error("Error deleting NGO: ", error);
@@ -65,7 +65,7 @@ const Resources = () => {
   const updateVictim = async (updatedVictim) => {
     try {
       const response = await axios.put(
-        `http://localhost:5001/api/admin/victims/${updatedVictim._id}`,
+        `https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victims/${updatedVictim._id}`,
         updatedVictim
       );
       setVictims(victims.map((victim) => (victim._id === response.data._id ? response.data : victim)));
@@ -77,7 +77,7 @@ const Resources = () => {
 
   const deleteVictim = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/admin/victims/${id}`);
+      await axios.delete(`https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victims/${id}`);
       setVictims(victims.filter((victim) => victim._id !== id));
     } catch (error) {
       console.error("Error deleting Victim: ", error);
@@ -88,7 +88,7 @@ const Resources = () => {
   const updateVictimRequest = async (updatedRequest) => {
     try {
       const response = await axios.put(
-        `http://localhost:5001/api/admin/victim-requests/${updatedRequest._id}`,
+        `https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victim-requests/${updatedRequest._id}`,
         updatedRequest
       );
       setVictimRequests(
@@ -102,7 +102,7 @@ const Resources = () => {
 
   const deleteVictimRequest = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/admin/victim-requests/${id}`);
+      await axios.delete(`https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victim-requests/${id}`);
       setVictimRequests(victimRequests.filter((req) => req._id !== id));
     } catch (error) {
       console.error("Error deleting Victim Request: ", error);
@@ -113,7 +113,7 @@ const Resources = () => {
   const updateEmergencyAlert = async (updatedAlert) => {
     try {
       const response = await axios.put(
-        `http://localhost:5001/api/admin/emergencies/${updatedAlert._id}`,
+        `https://disaster-relief-coordination-system-backend.vercel.app/api/admin/emergencies/${updatedAlert._id}`,
         updatedAlert
       );
       setEmergencyAlerts(
@@ -129,7 +129,7 @@ const Resources = () => {
 
   const deleteEmergencyAlert = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/admin/emergencies/${id}`);
+      await axios.delete(`https://disaster-relief-coordination-system-backend.vercel.app/api/admin/emergencies/${id}`);
       setEmergencyAlerts(emergencyAlerts.filter((alert) => alert._id !== id));
     } catch (error) {
       console.error("Error deleting Emergency Alert: ", error);

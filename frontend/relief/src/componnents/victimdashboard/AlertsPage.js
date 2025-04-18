@@ -22,7 +22,7 @@ const AlertsPage = () => {
   // Function to fetch alerts based on logged-in email
   const fetchUserAlerts = async () => {
     try {
-      const response = await axios.post(`http://localhost:5001/api/emergency/myemergencyrequest/`, {
+      const response = await axios.post(`https://disaster-relief-coordination-system-backend.vercel.app/api/emergency/myemergencyrequest/`, {
         email: localStorage.getItem("email"),  // Sending email as part of the request body
       });
   
@@ -92,7 +92,7 @@ const AlertsPage = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5001/api/emergency/sendemergency", {
+      const response = await fetch("https://disaster-relief-coordination-system-backend.vercel.app/api/emergency/sendemergency", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

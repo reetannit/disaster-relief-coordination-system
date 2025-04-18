@@ -19,7 +19,7 @@ const UpdatesPage = () => {
 
         // Send a POST request to the API with the email
         const response = await axios.post(
-          "http://localhost:5001/api/request/myrequests",
+          "https://disaster-relief-coordination-system-backend.vercel.app/api/request/myrequests",
           { email }
         );
 

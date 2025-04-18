@@ -6,7 +6,7 @@ const AlertSystem = () => {
   // Define fetchAlerts inside the component
   const fetchAlerts = async () => {
     try {
-      const response = await fetch("http://localhost:5001/api/emergency/emergencies");
+      const response = await fetch("https://disaster-relief-coordination-system-backend.vercel.app/api/emergency/emergencies");
       const data = await response.json();
       console.log("Fetched Emergencies:", data);
       setAlerts(data);
@@ -22,7 +22,7 @@ const AlertSystem = () => {
   const handleAccept = async (id) => {
     try {
       // Update the alert status to "Completed" immediately
-      await fetch(`http://localhost:5001/api/emergency/updateStatus`, {
+      await fetch(`https://disaster-relief-coordination-system-backend.vercel.app/api/emergency/updateStatus`, {
         method: "PATCH",
         headers: {
           "Content-Type": "application/json",

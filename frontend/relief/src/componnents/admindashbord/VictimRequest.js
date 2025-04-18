@@ -11,7 +11,7 @@ const VictimRequests = () => {
 
   const fetchVictimRequests = async () => {
     try {
-      const response = await axios.get("http://localhost:5001/api/admin/victim-requests");
+      const response = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victim-requests");
       setVictimRequests(response.data);
     } catch (error) {
       console.error("Error fetching victim requests:", error);
@@ -21,7 +21,7 @@ const VictimRequests = () => {
   // Delete a victim request
   const handleDeleteRequest = async (id) => {
     try {
-      await axios.delete(`http://localhost:5001/api/admin/victim-requests/${id}`);
+      await axios.delete(`https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victim-requests/${id}`);
       setVictimRequests(victimRequests.filter((req) => req._id !== id));
     } catch (error) {
       console.error("Error deleting victim request:", error);

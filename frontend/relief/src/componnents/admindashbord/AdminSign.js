@@ -34,7 +34,7 @@ const AdminSignup = () => {
 
     setLoading(true);
     try {
-      const response = await axios.post("http://localhost:5001/api/admin/signup", formData);
+      const response = await axios.post("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/signup", formData);
       alert("Signup successful! Please log in.");
       navigate("/admin-login");
     } catch (error) {

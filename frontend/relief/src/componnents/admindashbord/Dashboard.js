@@ -10,16 +10,16 @@ const Dashboard = () => {
   useEffect(() => {
     const fetchData = async () => {
       try {
-        const ngosRes = await axios.get("http://localhost:5001/api/admin/ngos");
+        const ngosRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/ngos");
         setNgos(ngosRes.data);
 
-        const victimsRes = await axios.get("http://localhost:5001/api/admin/victims");
+        const victimsRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victims");
         setVictims(victimsRes.data);
 
-        const victimReqRes = await axios.get("http://localhost:5001/api/admin/victim-requests");
+        const victimReqRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/victim-requests");
         setVictimRequests(victimReqRes.data);
 
-        const emergenciesRes = await axios.get("http://localhost:5001/api/admin/emergencies");
+        const emergenciesRes = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/emergencies");
         setEmergencies(emergenciesRes.data);
       } catch (error) {
         console.error("Error fetching dashboard data: ", error);

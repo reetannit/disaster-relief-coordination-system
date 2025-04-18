@@ -14,7 +14,7 @@ const DisasterStatus = () => {
 
         // Fetch disaster requests assigned to NGO
         const response = await axios.post(
-          `http://localhost:5001/api/ngo/ngoRequests`,
+          `https://disaster-relief-coordination-system-backend.vercel.app/api/ngo/ngoRequests`,
           { email: loggedInEmail }
         );
 
@@ -52,7 +52,7 @@ const DisasterStatus = () => {
   const handleStatusChange = async (requestId, newStatus) => {
     try {
       const response = await axios.patch(
-        "http://localhost:5001/api/request/updateStatus",
+        "https://disaster-relief-coordination-system-backend.vercel.app/api/request/updateStatus",
         {
           id: requestId,
           status: newStatus,

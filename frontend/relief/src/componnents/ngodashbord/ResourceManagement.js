@@ -15,7 +15,7 @@ const ResourceManagement = () => {
   // Function to fetch relief data from the backend
   const fetchReliefData = async () => {
     try {
-      const response = await axios.post("http://localhost:5001/api/ngo/get-resources", {
+      const response = await axios.post("https://disaster-relief-coordination-system-backend.vercel.app/api/ngo/get-resources", {
         email: localStorage.getItem("email"),
       });
       setResources(response.data.resources); // Update the resources state with fetched data
@@ -40,7 +40,7 @@ const ResourceManagement = () => {
     try {
       console.log("Sending resources:", resources); // Debugging Log
 
-      const response = await axios.post("http://localhost:5001/api/ngo/create-resources", {
+      const response = await axios.post("https://disaster-relief-coordination-system-backend.vercel.app/api/ngo/create-resources", {
         email: localStorage.getItem("email"),
         resources,
       });

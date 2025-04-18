@@ -10,7 +10,7 @@ const NGOLoginPage = () => {
   const handleNGOLogin = async (e) => {
     e.preventDefault();
     try {
-      const response = await fetch("http://localhost:5001/api/ngo/signin", {
+      const response = await fetch("https://disaster-relief-coordination-system-backend.vercel.app/api/ngo/signin", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

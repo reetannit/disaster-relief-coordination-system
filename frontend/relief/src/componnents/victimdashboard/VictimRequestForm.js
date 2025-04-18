@@ -60,7 +60,7 @@ const VictimRequestForm = () => {
     };
 
     try {
-      const response = await fetch("http://localhost:5001/api/request/create", {
+      const response = await fetch("https://disaster-relief-coordination-system-backend.vercel.app/api/request/create", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",

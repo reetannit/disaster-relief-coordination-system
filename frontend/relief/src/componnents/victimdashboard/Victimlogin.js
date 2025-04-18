@@ -9,7 +9,7 @@ const Victimlogin = () =>  {
     const handleVictimLogin = async (e) => {
       e.preventDefault();
       try {
-        const response = await fetch("http://localhost:5001/api/victims/signin", {
+        const response = await fetch("https://disaster-relief-coordination-system-backend.vercel.app/api/victims/signin", {
           method: "POST",
           headers: {
             "Content-Type": "application/json",

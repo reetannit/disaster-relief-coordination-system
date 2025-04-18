@@ -8,7 +8,7 @@ const NgoVerification = () => {
   useEffect(() => {
     const fetchNgos = async () => {
       try {
-        const response = await axios.get("http://localhost:5001/api/admin/ngos");
+        const response = await axios.get("https://disaster-relief-coordination-system-backend.vercel.app/api/admin/ngos");
         // Keep only NGOs where verified is not "true"
         const unverifiedNgos = response.data.filter((ngo) => ngo.verified !== "true");
         setNgos(unverifiedNgos);
@@ -30,7 +30,7 @@ const NgoVerification = () => {
       const updatedNgo = { ...ngoToUpdate, verified: "true" };
 
       // Make the PUT request to update the NGO on the backend
-      await axios.put(`http://localhost:5001/api/admin/ngos/${id}`, updatedNgo);
+      await axios.put(`https://disaster-relief-coordination-system-backend.vercel.app/api/admin/ngos/${id}`, updatedNgo);
 
       // Remove the NGO from state since it is now verified
       setNgos(ngos.filter((ngo) => ngo._id !== id));

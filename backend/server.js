@@ -11,10 +11,10 @@ const app = express();
 const PORT = 5001;
 
 // MongoDB Connection URL
-const MONGO_URI = "mongodb://localhost:27017/disasterreliefcordinationsystem"; // Replace 'your_database_name' with your database name
+const MONGO_URI = "mongodb+srv://reetanmohapatra8280:GxVN3tOLHUkLokZx@cluster0.aonig5j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; // Replace 'your_database_name' with your database name
 
 const corsOptions = {
-  origin: '*',  // Replace with your frontend URL if needed
+  origin: ['*','https://disaster-relief-coordination-system-frontend.vercel.app'],  // Replace with your frontend URL if needed
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
 };

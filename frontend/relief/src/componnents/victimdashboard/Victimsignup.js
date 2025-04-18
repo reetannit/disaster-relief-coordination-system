@@ -188,7 +188,7 @@ export const Victimsignup = () => {
     if (!validateForm()) return;
 
     try {
-      const response = await fetch("http://localhost:5001/api/victims/signup", {
+      const response = await fetch("https://disaster-relief-coordination-system-backend.vercel.app/api/victims/signup", {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
