@@ -10,7 +10,7 @@ const emergencyRoutes = require("./routes/emergencyRoutes");
 const app = express();
 
 // MongoDB Connection URL
-const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://reetanmohapatra8280:GxVN3tOLHUkLokZx@cluster0.aonig5j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
+const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://reetan:reetan@cluster0.ugslpdv.mongodb.net/";
 
 const corsOptions = {
   origin: [
