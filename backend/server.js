@@ -36,11 +36,13 @@ const connectDB = async () => {
     isConnected = true;
     console.log('MongoDB connected');
 
-    // Ensure 2dsphere index is created on 'location' field in 'Request' collection
-    const Request = mongoose.model('Request');
-    Request.collection.createIndex({ "location": "2dsphere" }).catch((err) => {
-      console.error("Error creating 2dsphere index:", err);
-    });
+    // Ensure 2dsphere index (non-fatal if it fails)
+    try {
+      const Request = require("./models/Request");
+      await Request.collection.createIndex({ "location": "2dsphere" });
+    } catch (indexErr) {
+      console.error("Index creation error (non-fatal):", indexErr.message);
+    }
   } catch (err) {
     console.error('MongoDB connection error:', err);
     throw err;
