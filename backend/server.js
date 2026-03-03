@@ -8,15 +8,20 @@ const requestRoutes = require("./routes/requestRoutes");
 const emergencyRoutes = require("./routes/emergencyRoutes");
 
 const app = express();
-const PORT = 5001;
+const PORT = process.env.PORT || 5001;
 
 // MongoDB Connection URL
-const MONGO_URI = "mongodb+srv://reetanmohapatra8280:GxVN3tOLHUkLokZx@cluster0.aonig5j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0"; // Replace 'your_database_name' with your database name
+const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://reetanmohapatra8280:GxVN3tOLHUkLokZx@cluster0.aonig5j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
 
 const corsOptions = {
-  origin: ['*','https://disaster-relief-coordination-system-frontend.vercel.app'],  // Replace with your frontend URL if needed
+  origin: [
+    'https://disaster-relief-coordination-system-frontend.vercel.app',
+    'http://localhost:3000',
+    'http://localhost:5173',
+  ],
   methods: ['GET', 'POST', 'PUT', 'DELETE', 'PATCH'],
   allowedHeaders: ['Content-Type', 'Authorization'],
+  credentials: true,
 };
 
 app.use(cors(corsOptions));
