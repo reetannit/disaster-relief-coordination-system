@@ -1,6 +1,6 @@
 const express = require("express");
 const cors = require("cors");
-const mongoose = require("mongoose"); // Import mongoose
+const mongoose = require("mongoose");
 const victimRoutes = require("./routes/victimRoutes");
 const ngoRoutes = require("./routes/ngoRoutes");
 const adminRoutes = require("./routes/adminRoutes");
@@ -8,7 +8,6 @@ const requestRoutes = require("./routes/requestRoutes");
 const emergencyRoutes = require("./routes/emergencyRoutes");
 
 const app = express();
-const PORT = process.env.PORT || 5001;
 
 // MongoDB Connection URL
 const MONGO_URI = process.env.MONGODB_URI || "mongodb+srv://reetanmohapatra8280:GxVN3tOLHUkLokZx@cluster0.aonig5j.mongodb.net/?retryWrites=true&w=majority&appName=Cluster0";
@@ -27,37 +26,43 @@ const corsOptions = {
 app.use(cors(corsOptions));
 app.use(express.json());
 
-// Routes
+// Cached MongoDB connection for serverless
+let isConnected = false;
+
+const connectDB = async () => {
+  if (isConnected) return;
+  try {
+    await mongoose.connect(MONGO_URI);
+    isConnected = true;
+    console.log('MongoDB connected');
+
+    // Ensure 2dsphere index is created on 'location' field in 'Request' collection
+    const Request = mongoose.model('Request');
+    Request.collection.createIndex({ "location": "2dsphere" }).catch((err) => {
+      console.error("Error creating 2dsphere index:", err);
+    });
+  } catch (err) {
+    console.error('MongoDB connection error:', err);
+    throw err;
+  }
+};
+
+// Connect to MongoDB BEFORE handling any route
+app.use(async (req, res, next) => {
+  try {
+    await connectDB();
+    next();
+  } catch (err) {
+    res.status(500).json({ error: 'Database connection failed' });
+  }
+});
+
+// Routes (AFTER DB connection middleware)
 app.use("/api/victims", victimRoutes);
 app.use("/api/ngo", ngoRoutes);
 app.use("/api/admin", adminRoutes);
 app.use("/api/request", requestRoutes);
 app.use("/api/emergency", emergencyRoutes);
 
-// MongoDB connection and 2dsphere index creation
-mongoose.connect(MONGO_URI, {
-  useNewUrlParser: true,
-  useUnifiedTopology: true,
-}).then(() => {
-  console.log('MongoDB connected');
-
-  // Ensure 2dsphere index is created on 'location' field in 'Request' collection
-  const Request = mongoose.model('Request'); // Import the Request model
-
-  // Create 2dsphere index if not already created
-  Request.collection.createIndex({ "location": "2dsphere" }, function(err, result) {
-    if (err) {
-      console.error("Error creating 2dsphere index:", err);
-    } else {
-      console.log("2dsphere index created on the 'location' field:", result);
-    }
-  });
-  
-}).catch((err) => {
-  console.error('MongoDB connection error:', err);
-});
-
-// Start server
-app.listen(PORT, () => {
-  console.log(`Server is running on http://localhost:${PORT}`);
-});
+// Export for Vercel serverless
+module.exports = app;
